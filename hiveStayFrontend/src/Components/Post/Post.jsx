@@ -19,8 +19,7 @@ export default function Post() {
             }
           };
             getPosts();
-      }, [post]);
-      
+      }, []);
       const formatDate = (dateString) => {
         const date = new Date(dateString);
         return date.toLocaleDateString('en-US', { timeZone: 'UTC' });
