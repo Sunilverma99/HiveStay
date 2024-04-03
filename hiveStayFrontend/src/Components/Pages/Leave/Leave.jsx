@@ -24,7 +24,7 @@ const[data,setData]=useState({
   mobileNumber:user.mobileNumber,
   homeMobileNumber:user.homeMobileNumber,
   reason:"",
-  userId:user.id
+  userId:user._id
 });
 
 const navigate = useNavigate();
@@ -74,11 +74,10 @@ console.log(data)
         console.log(error);
       }
     };
-  
     fetchData();
+    console.log(value);
   }, []);
-  
-
+  console.log(value);
 
   const handleChange = (e) => {
      const {id,value}=e.target;
@@ -98,7 +97,7 @@ console.log(data)
         {user?.email==="warden@iiitu.ac.in"?(
            <div className='ml-96'>
            {value.map((item)=>(
-               <LeaveCard
+               <LeaveCard key={item._id}
                id={item._id}
                name={item.name}
                email={item.email}
@@ -112,7 +111,6 @@ console.log(data)
                homeMobileNumber={item.homeMobileNumber}
                from={item.from}
                to={item.to}
-
                />
            ))}
        
