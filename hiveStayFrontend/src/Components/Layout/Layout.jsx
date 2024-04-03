@@ -5,9 +5,11 @@ import { IoMdNotifications } from "react-icons/io";
 import axios from "axios";
 import Cookies from 'js-cookie';
 import { useNavigate } from "react-router-dom";
-
+import { useEffect } from "react";
+import { useRef } from "react";
 export default function Layout({ title }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null); 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
@@ -27,9 +29,24 @@ export default function Layout({ title }) {
     console.log(err);
   }
 }
+useEffect(() => {
+  // Function to handle clicks outside the dropdown
+  function handleClickOutside(event) {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setIsDropdownOpen(false);
+    }
+  }
 
+  // Add event listener to detect clicks on the document body
+  document.body.addEventListener('click', handleClickOutside);
+
+  // Cleanup: remove event listener when component unmounts
+  return () => {
+    document.body.removeEventListener('click', handleClickOutside);
+  };
+}, []);
   return (
-    <div className="g-sidenav-show bg-gray-200 ">
+    <div className="g-sidenav-show bg-gray-200  "  ref={dropdownRef}>
       <aside
         className="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 bg-gradient-dark"
         id="sidenav-main"
@@ -38,7 +55,7 @@ export default function Layout({ title }) {
           <h1 className="text-3xl text-white ml-12 mt-4">HIVE STAY</h1>
         </div>
         <nav className="flex flex-col p-3 -mt-4">
-          <ul className="flex flex-col">
+          <ul className={`flex flex-col ${isDropdownOpen?"":""}`}>
             <li className="mb-4 text-lg ">
               <Link to="/" className="text-slate-100 flex items-center hover:text-pink-600 ">
                 <svg
@@ -93,14 +110,14 @@ export default function Layout({ title }) {
               </a>
               {isDropdownOpen && (
                 <div
-                  className="dropdown-content absolute bg-gray-800 text-white p-1 mt-1"
-                  onClick={() => setIsDropdownOpen(true)}
+                  className={`dropdown-content absolute bg-gray-800 text-white p-1 mt-1 rounded-lg ${isDropdownOpen?"":""}`}
+                  onClick={() => setIsDropdownOpen(isDropdownOpen?false:true)}
                 >
                   <Link to="/mess" className="block px-4 text-lg py-2">
                     Mess
                   </Link>
                   <Link to="/civil" className="block px-4 text-lg py-2">
-                    Civil
+                    Room
                   </Link>
                 </div>
               )}
