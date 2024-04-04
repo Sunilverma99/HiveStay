@@ -50,6 +50,7 @@ export const complaints=async(req,res,next)=>{
       return res.status(400).json({ error: 'Please Enter the complaints or Empty' });
     }
     await complaint.save();
+    
     res.status(201).send("your complaints added successfully");
   } catch (error) {
     res.status(400).send(error);
@@ -86,20 +87,15 @@ export  const holidaysApplication=async(req,res,next)=>{
 //function for room maintaince like electric and civil
 export const roomMaintaince=async(req,res,next)=>{
   try {
-    const { userId, category, description,hostelName,roomNumber } = req.body;
-
-    const maintenanceRequest = new RoomMaintaince({
-      userId,
-      category,
-      description,
-      hostelName,
-      roomNumber
-    });
-
-    await maintenanceRequest.save();
-    res.status(201).json("Your request is sended successfuly");
+    const { name,email,roll,room,subject,complain,userId} = req.body;
+    const roomMaintaince = new RoomMaintaince({name,email,roll,room,subject,complain,userId});
+    if(!roomMaintaince){
+      return res.status(400).json({ error: 'Please Enter the complaints or Empty' });
+    }
+    await roomMaintaince.save();
+    res.status(201).send("your complaints added successfully");
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(400).send(error);
   }
 }
 
@@ -116,5 +112,15 @@ export const holidayApplicationResponse = async (req, res, next) => {
   } catch (err) {
     console.log(err);
     return res.status(500).json({ error: 'Internal server error' });
+  }
+};
+export const getCount=async(req,res,next)=>{
+  try {
+    const userCount = await User.countDocuments();
+    const complaintCount = await Complaint.countDocuments();
+
+    res.status(200).json({ userCount, complaintCount });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 };

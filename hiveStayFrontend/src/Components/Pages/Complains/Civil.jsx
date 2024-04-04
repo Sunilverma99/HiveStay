@@ -23,19 +23,18 @@ export default function Civil() {
       "url('https://images.unsplash.com/photo-1497294815431-9365093b7331?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80')",
   };
   const user = useSelector((state) => state?.auth?.user);
-  console.log(user)
+  
   useEffect(() => {
     setName(user?.firstName);
     setEmail(user?.email);
     setRoll(user?.rollNumber);
     setRoom(user?.roomNumber)
-    console.log(user?.id)
   }, [name,email,roll,room,subject,complain]);
  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
-      const res=await axios.post("http://localhost:3000/api/addComplaints",{name,email,roll,mess,subject,complain,userId: user?.id
+      const res=await axios.post("http://localhost:3000/api/roomMaintance",{name,email,roll,room,subject,complain,userId: user?.id
     },{
       headers: {
         "Content-Type": "application/json",
@@ -50,6 +49,7 @@ export default function Civil() {
   }catch(err){
     console.log(err);
   }
+
 }
 
 const getComplaints=async()=>{
@@ -60,7 +60,8 @@ const getComplaints=async()=>{
       },
     })
     console.log(res.data)
-    setValue(res.data)
+    const reversedData = res.data.reverse();
+    setValue(reversedData)
   }
 catch(err){
   console.log(err);
@@ -72,6 +73,54 @@ useEffect(() => {
   return (
     <div>
         <Layout title="Civil Complains"/>
+
+        {user?.email==="warden@iiitu.ac.in"?(
+           <div className='ml-72'>
+            
+            <section class="  p-3 sm:p-5">
+    <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
+        <div class=" relative shadow-md sm:rounded-lg overflow-hidden">
+            
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs  uppercase  bg-pink-500 text-white">
+                        <tr>
+                            <th scope="col" class="px-4 py-3">Date</th>
+                            <th scope="col" class="px-4 py-3">Name</th>
+                            <th scope="col" class="px-4 py-3">Roll No.</th>
+                            <th scope="col" class="px-4 py-3">Room NO.</th>
+                            <th scope="col" class="px-4 py-3">Subject</th>
+                            <th scope="col" class="px-4 py-3">Description</th>
+                        </tr>
+                    </thead>
+          {value.map((item)=>{
+              const formattedDate = new Date(item.Date).toLocaleDateString();
+
+            return( 
+                    <tbody>
+                        <tr class="border-b dark:border-pink-500">
+                            <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap ">{formattedDate}</th>
+                            <td class="px-4 text-black py-3">{item.name}</td>
+                            <td class="px-4 text-black py-3">{item.roll}</td>
+                            <td class="px-4 text-black py-3">{item.room}</td>
+                            <td class="px-4 text-black py-3">{item.subject}</td>
+                            <td class="px-4 text-black py-3">{item.complain}</td>
+                            
+                        </tr>
+                    </tbody>
+                )
+                
+            
+              })}
+                </table>
+            </div>
+            
+        </div>
+    </div>
+    </section>
+           
+            </div>
+        ):(
       
         <body class="white">
      
@@ -176,7 +225,7 @@ useEffect(() => {
        </div>
      </main>
    </body>
-
+        )}
 
     </div>
   )

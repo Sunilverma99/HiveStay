@@ -1,6 +1,7 @@
 import HolidaysApplication from "../models/HolidaysApplication.js";
 import mongoose from "mongoose";
 import Complaints from "../models/Complaints.js";
+import RoomMaintaince from "../models/RoomMaintaince.js";
 
 export const holidaysApplicationStatus = async (req, res, next) => {
     const { id } = req.params;
@@ -45,6 +46,18 @@ export const getHolidaysApplication = async (req, res, next) => {
 export const getmessComplaints = async (req, res, next) => {
     try{
         const application = await Complaints.find();
+        console.log(application);
+        return res.status(200).json(application);
+    }
+    catch(error){
+        console.error(error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+}
+
+export const getCivilComplaints = async (req, res, next) => {
+    try{
+        const application = await RoomMaintaince.find();
         console.log(application);
         return res.status(200).json(application);
     }

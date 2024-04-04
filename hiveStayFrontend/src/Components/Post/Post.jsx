@@ -13,7 +13,8 @@ export default function Post() {
                   "Content-Type": "application/json"
                 }
               });
-              setPost(res.data);
+              const reversedData = res.data.reverse();
+              setPost(reversedData);
             } catch (error) {
               console.log(error);
             }

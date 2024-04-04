@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { useState } from "react";
 import { useEffect } from 'react';
+import moment from 'moment';
 
 
 export default function Mess() {
@@ -48,19 +49,21 @@ export default function Mess() {
   }
 }
 
-const getComplaints=async()=>{
-  try{
-    const res=await axios.get("http://localhost:3000/api/getmessComplaints",{
+const getComplaints = async () => {
+  try {
+    const res = await axios.get("http://localhost:3000/api/getmessComplaints", {
       headers: {
         "Content-Type": "application/json",
       },
-    })
-    console.log(res.data)
-    setValue(res.data)
+    });
+    const reversedData = res.data.reverse();
+    console.log(reversedData);
+    setValue(reversedData);
+  } catch (error) {
+    console.error("Failed to fetch complaints:", error);
   }
-catch(err){
-  console.log(err);
-}}
+};
+
 
 useEffect(() => {
   getComplaints();
@@ -71,13 +74,49 @@ useEffect(() => {
 
         {user?.email==="warden@iiitu.ac.in"?(
            <div className='ml-72'>
+            
+            <section class="  p-3 sm:p-5">
+    <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
+        <div class=" relative shadow-md sm:rounded-lg overflow-hidden">
+            
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs  uppercase  bg-pink-500 text-white">
+                        <tr>
+                            <th scope="col" class="px-4 py-3">Date</th>
+                            <th scope="col" class="px-4 py-3">Name</th>
+                            <th scope="col" class="px-4 py-3">Roll No.</th>
+                            <th scope="col" class="px-4 py-3">Mess</th>
+                            <th scope="col" class="px-4 py-3">Subject</th>
+                            <th scope="col" class="px-4 py-3">Description</th>
+                        </tr>
+                    </thead>
           {value.map((item)=>{
+              const formattedDate = new Date(item.Date).toLocaleDateString();
 
-          })}
-            <div>
-              <h1>Mess Regardings Complains</h1>
-              
+            return( 
+                    <tbody>
+                        <tr class="border-b dark:border-pink-500">
+                            <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap ">{formattedDate}</th>
+                            <td class="px-4 text-black py-3">{item.name}</td>
+                            <td class="px-4 text-black py-3">{item.roll}</td>
+                            <td class="px-4 text-black py-3">{item.mess}</td>
+                            <td class="px-4 text-black py-3">{item.subject}</td>
+                            <td class="px-4 text-black py-3">{item.complain}</td>
+                            
+                        </tr>
+                    </tbody>
+                )
+                
+            
+              })}
+                </table>
             </div>
+            
+        </div>
+    </div>
+    </section>
+           
             </div>
         ):(
         <body class="white">

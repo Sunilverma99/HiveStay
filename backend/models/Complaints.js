@@ -7,6 +7,7 @@ const complaintSchema = new mongoose.Schema({
   subject: { type: String, required: true },
   complain: { type: String, required: true },
   userId: { type: String, required: true },
+  Date: { type: Date, default: Date.now },
 });
 const Complaint = mongoose.model("Complaint", complaintSchema);
 

@@ -7,7 +7,7 @@ import addSuggestions from './routes/user.router.js'
 import addComplaints from './routes/user.router.js'
 import holidaysApplication from './routes/user.router.js'
 import user from './routes/user.router.js'
-import roomMaintance from "./routes/user.router.js"
+import roomMaintaince from "./routes/user.router.js"
 import logout from "./routes/auth.router.js"
 import post from "./routes/post.router.js"
 import getPosts from "./routes/post.router.js"
@@ -15,6 +15,8 @@ import  holidaysApplicationStatus from "./routes/warden.router.js"
 import getHolidaysApplication from "./routes/warden.router.js"
 import holidayApplicationResponse from "./routes/user.router.js"
 import getmessComplaints from "./routes/warden.router.js"
+import getCount from "./routes/user.router.js"
+import  getCivilComplaints  from "./routes/warden.router.js";
  
  dotenv.config();
 
@@ -37,7 +39,7 @@ app.use("/api",user)
 app.use("/api",addSuggestions)
 app.use("/api",addComplaints)
 app.use('/api',holidaysApplication)
-app.use('/api',roomMaintance)
+app.use('/api',roomMaintaince)
 app.use("/api",logout);
 app.use("/api",post);
 app.use("/api",getPosts);
@@ -45,6 +47,8 @@ app.use("/api",holidaysApplicationStatus)
 app.use("/api",getHolidaysApplication)
 app.use("/api",holidayApplicationResponse)
 app.use("/api",getmessComplaints)
+app.use("/api",getCount)
+app.use("/api",getCivilComplaints)
 
 
 app.use(express.json()); // Parse JSON requests

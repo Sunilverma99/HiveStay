@@ -1,11 +1,12 @@
 import express from "express"
-import { complaints, holidaysApplication, roomMaintaince, suggestions ,user,holidayApplicationResponse} from "../controllers/user.controller.js";
+import { complaints, holidaysApplication, roomMaintaince, suggestions ,user,holidayApplicationResponse,getCount} from "../controllers/user.controller.js";
 const router = express.Router();
 router.get('/user',user);
 router.post('/addSuggestions',suggestions)
 router.post('/addComplaints',complaints)
 router.post('/holidaysApplication',holidaysApplication)
-router.post('/roomMaintaince',roomMaintaince)
+router.post('/roomMaintance',roomMaintaince)
 router.get('/applicationResult/:userId',holidayApplicationResponse)
+router.get('/getCount',getCount)
 
 export default router;
