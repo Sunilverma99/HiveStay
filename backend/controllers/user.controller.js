@@ -73,6 +73,7 @@ export  const holidaysApplication=async(req,res,next)=>{
   try {
     const holidayApplication = new HolidaysApplication(req.body);
     
+    
     const value=await holidayApplication.save();
     console.log("value",value);
     res.status(201).send("Your application is sended successfully");

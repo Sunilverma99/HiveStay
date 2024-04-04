@@ -19,7 +19,6 @@ export default function Notification() {
       });
       
       setValue(res.data);
-      
 
     } catch (error) {
       console.log(error);
