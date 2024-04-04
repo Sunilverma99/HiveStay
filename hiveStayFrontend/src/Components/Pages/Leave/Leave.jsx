@@ -8,7 +8,10 @@ import toast, { Toaster } from 'react-hot-toast';
 export default function Leave() {
   const user = useSelector(state => state.auth.user);
   const [value,setValue]=useState([]);
-  
+  const backgroundImageStyle = {
+    backgroundImage:
+      "url('https://images.unsplash.com/photo-1497294815431-9365093b7331?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80')",
+  };
 const[data,setData]=useState({
   name:user.firstName,
   email:user.email,
@@ -19,9 +22,9 @@ const[data,setData]=useState({
   from:Date,
   to:Date,
   mobileNumber:user.mobileNumber,
-  homeMobileNumber:"",
+  homeMobileNumber:user.homeMobileNumber,
   reason:"",
-  userId:user?.id
+  userId:user._id
 });
 
 const navigate = useNavigate();
@@ -49,7 +52,7 @@ const handleSubmit = async (e) => {
     toast.error("Please try again Later");
   }
   };
-
+console.log(data)
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -66,110 +69,220 @@ const handleSubmit = async (e) => {
        });
         setValue(filteredData);
        
-      } catch (error) {
-       
+      } catch (error) { 
+        console.log(error);
       }
     };
-  
     fetchData();
-  }, [value]);
-  
-
+    console.log(value);
+  }, []);
+  console.log(value);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+     const {id,value}=e.target;
+     setData((prev)=>{
+      return{
+        ...prev,
+        [id]:value
+      }
+     })
   };
-  return (
+  return (<>
+  
+
     <div>
-        <Layout title="Leave"/>
-        {user.email==="warden@iiitu.ac.in"?(
-          <div className='ml-96'>
-            {value.map((item)=>(
-                <LeaveCard
-                id={item._id}
-                name={item.name}
-                email={item.email}
-                hostelName={item.hostelName}
-                roomNumber={item.roomNumber}
-                rollNumber={item.rollNumber}
-                noOfHolidays={item.noOfHolidays}
-                reason={item.reason}
-                status={item.status}
-                mobileNumber={item.mobileNumber}
-                homeMobileNumber={item.homeMobileNumber}
-                from={item.from}
-                to={item.to}
+        <Layout title=" Leave form"/>
 
-                />
-            ))}
-        
-          </div>
+        {user?.email==="warden@iiitu.ac.in"?(
+           <div className='ml-96'>
+           {value.map((item)=>(
+               <LeaveCard key={item._id}
+               id={item._id}
+               name={item.name}
+               email={item.email}
+               hostelName={item.hostelName}
+               roomNumber={item.roomNumber}
+               rollNumber={item.rollNumber}
+               noOfHolidays={item.noOfHolidays}
+               reason={item.reason}
+               status={item.status}
+               mobileNumber={item.mobileNumber}
+               homeMobileNumber={item.homeMobileNumber}
+               from={item.from}
+               to={item.to}
+               />
+           ))}
+       
+         </div>
         ):(
-<form onSubmit={handleSubmit} className="max-w-md mx-auto my-4 ">
-<div className="relative z-0 w-full mb-5 group bg-rose-200 text-black rounded-lg">
-      <input onChange={handleChange} value={user.firstName} disabled type="name" name="name" id="name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-      <label htmlFor="floating_password" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transhtmlForm -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Name</label>
-  </div>
-  <div className="relative z-0 w-full mb-5 group bg-rose-200 text-black rounded-lg">
-      <input onChange={handleChange} value={user.email} disabled type="email" name="email" id="email" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-      <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transhtmlForm -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
-  </div>
-  
-  
-  <div className="grid md:grid-cols-3 md:gap-6">
-    <div className="relative z-0 w-full mb-5 group bg-rose-200 text-black rounded-lg">
-      <input type="text" onChange={handleChange} name="hostelName" id="HostelName" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-      <label htmlFor="floating_repeat_password" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transhtmlForm -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Hostel Name</label>
-  </div>
-    <div className="relative z-0 w-full mb-5 group bg-rose-200 text-black rounded-lg">
-        <input type="text" name="roomNumber" value={user.roomNumber} disabled onChange={handleChange} id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-        <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transhtmlForm -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Room No</label>
-    </div>
-    <div className="relative z-0 w-full mb-5 group bg-rose-200 text-black rounded-lg">
-        <input type="text" name="rollNumber" value={user.rollNumber} disabled onChange={handleChange} id="floating_first_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-        <label htmlFor="floating_first_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transhtmlForm -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Roll No.</label>
-    </div>
-  </div>
-   
-  <div className="grid md:grid-cols-3 md:gap-6">
-    <div className="relative z-0 w-full mb-5 group bg-rose-200 text-black rounded-lg">
-      <input type="text" name="noOfHolidays"  onChange={handleChange} id="HostelName" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-      <label htmlFor="floating_repeat_password" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transhtmlForm -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">No of Holidays</label>
-  </div>
-    <div className="relative z-0 w-full mb-5 group bg-rose-200 text-black rounded-lg">
-        <input type="date" name="from" onChange={handleChange} id="floating_last_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-        <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transhtmlForm -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">From</label>
-    </div>
-    <div className="relative z-0 w-full mb-5 group bg-rose-200 text-black rounded-lg">
-        <input type="date" name="to" onChange={handleChange} id="floating_la" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-        <label htmlFor="floating_last_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transhtmlForm -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">To</label>
-    </div>
+        <body class="white">
+     
+        <main class="main-content  mt-0">
+          <div
+            class="page-header align-items-start min-vh-100"
+            style={backgroundImageStyle}
+          >
+            <span class="mask bg-gradient-dark opacity-6"></span>
+            <div class="container my-auto ml-56">
+              <div class="row">
+                <div class="col-lg-6 col-md-8 col-7 mx-auto">
+                  <div class="card z-index-0 fadeIn3 fadeInBottom">
+                    <div class="card-header p-0 position-relative mt-n4 mx-8 z-index-2">
+                      <div class="bg-gradient-primary shadow-primary border-radius-lg py-1 pe-1">
+                        <h4 class="text-white font-weight-bolder text-xl text-center mt-2 mb-4">
+                        Leave Form
+                        </h4>
+                        <div class="row mt-1"></div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <form  onSubmit={handleSubmit} class="text-start">
+                        <div className="input-group input-group-outline my-3">
+                          <input
+                            type="text"
+                            placeholder="First Name"
+                            className="form-control"
+                            required
+                            value={user.firstName}
+                            disabled
+                            id='name'
+                          />
+                         
+                        </div>
 
-  </div>
-  <div className="grid md:grid-cols-2 md:gap-6">
-  <div class="relative z-0 w-full mb-5 group">
-        <input type="tel" pattern="[0-9]{10}" name="mobileNumber" value={user.mobileNumber} disabled  onChange={handleChange} id="floating_phone" class="block text-black py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-        <label htmlFor="floating_phone" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transhtmlForm -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Mobile number (70465-54542)</label>
+                        <div className="input-group input-group-outline my-3">
+                          <input
+                            type="email"
+                            placeholder="Email"
+                            className="form-control"
+                            required
+                            disabled
+                            value={user.email}
+                            id='email'
+                          />
+                        
+                        </div>
+                    <div className='flex gap-2'>
+                    <div className="input-group input-group-outline my-3">
+                          <input
+                            type="String"
+                            placeholder="Hostel Name"
+                            className="form-control"
+                            required
+                            onChange={handleChange}
+                            id='hostelName'
+                          />
+                          
+                        </div>
+                        <div className="input-group input-group-outline my-3">
+                          <input
+                            type="Number"
+                            placeholder="Room No."
+                            className="form-control"
+                            required
+                            disabled
+                           value={user.roomNumber}
+                           id='roomNumber'
+                          />
+                        </div>
+                        <div className="input-group input-group-outline my-3">
+                          <input
+                            type="Number"
+                            placeholder="Roll No."
+                            className="form-control"
+                            required
+                            disabled
+                            value={user.rollNumber}
+                            id='rollNumber'
+                          />
+                          
+                        </div>
+                    </div>
+                    <div className='flex gap-2'>
+                    <div className="input-group input-group-outline my-3">
+                          <input
+                            type="Number"
+                            placeholder="No of Holidays"
+                            className="form-control"
+                            required
+                            onChange={handleChange}
+                            id='noOfHolidays'
+                          />
+                          
+                        </div>
+                        <div className="input-group input-group-outline my-3">
+                          <input
+                            type="Date"
+                            placeholder="From"
+                            className="form-control"
+                            required
+                            onChange={handleChange}
+                            id='from'
+                          />
+                        </div>
+                        <h3 className='py-4'>To</h3>
+                        <div className="input-group input-group-outline my-3">
+                          <input
+                            type="Date"
+                            placeholder="To"
+                            className="form-control"
+                            required
+                            onChange={handleChange}
+                            id='to'
+                          />
+                        </div>
+                    </div>
+                        <div className='flex gap-2'>
+                        <div className="input-group input-group-outline my-3">
+                          
+                          <input
+                            type="text"
+                            placeholder="Mobile Number"
+                            className="form-control "
+                            disabled
+                            required
+                            value={user.mobileNumber}
+                            id='mobileNumber'
+                          />
+                        </div>
+                        <div className="input-group input-group-outline my-3">
+                          
+                          <input
+                            type="text"
+                            placeholder="Home Mobile Number"
+                            className="form-control "
+                            required
+                            value={user.homeMobileNumber}
+                            onChange={handleChange}
+                            id='homeMobileNumber'
+                          />
+                        </div>
+                        </div>
+                        <div className="input-group input-group-outline my-3">
+                          <textarea
+                            type="text"
+                            placeholder="Write the Reason for Leave"
+                            className="form-control resize-none"
+                            required
+                            rows="5"
+                            onChange={handleChange}
+                            id='reason'
+                          />
+                        </div>
+                        <button className=' justify-center ml-56 mt-2 rounded-xl border bg-pink-500  hover:bg-pink-400  text-white p-2'>Submit</button>
+                      </form>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </body>
+      )}
     </div>
-    <div className="relative z-0 w-full mb-5 group bg-rose-200 text-black rounded-lg">
-        <input type="tel" name="homeMobileNumber" onChange={handleChange} id="floating_company" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-        <label htmlFor="floating_company" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transhtmlForm -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Home Mobile Number </label>
-    </div>
-  </div>
- 
-  <div className="relative z-0 w-full mb-5 group bg-rose-200 text-black rounded-lg">
-        <textarea type="text" name="reason" onChange={handleChange} id="floating_first_name" className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-        <label htmlFor="floating_first_name" className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transhtmlForm -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Reason</label>
-    </div>
-  <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
-</form>
-        )}
-
-    </div>
+    </>
   )
   
 }
