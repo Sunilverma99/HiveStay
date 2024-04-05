@@ -116,7 +116,7 @@ useEffect(() => {
                   <Link to="/mess" className="block px-4 text-lg py-2">
                     Mess
                   </Link>
-                  <Link to="/civil" className="block px-4 text-lg py-2">
+                  <Link to="/roomComplain" className="block px-4 text-lg py-2">
                     Room
                   </Link>
                 </div>

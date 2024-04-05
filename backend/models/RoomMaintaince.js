@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-
 const maintenanceRequestSchema = new mongoose.Schema({
     userId: { type: String, required: true },
     category: { type: String, required: true }, 

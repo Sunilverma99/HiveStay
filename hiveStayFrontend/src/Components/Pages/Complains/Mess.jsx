@@ -2,9 +2,8 @@ import React from 'react'
 import Layout from '../../Layout/Layout'
 import { useSelector } from "react-redux";
 import axios from "axios";
-import { useState } from "react";
-import { useEffect } from 'react';
-
+import { useState,useEffect } from "react";
+import {toast } from 'react-hot-toast'
 export default function Mess() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -37,12 +36,16 @@ export default function Mess() {
       },
 
     })
-    if(res.status===201){
+    if(res.ok){
       console.log("complaints added successfully")
+      toast.success("Complaints added successfully");
       window.location.reload();
+    }else{
+      toast.error("Pleae try again");
     }
-
+   
   }catch(err){
+    toast.error("Please try again");
     console.log(err);
   }
 }
@@ -109,7 +112,6 @@ useEffect(() => {
                             required
                             value={user.firstName}
                             disabled
-                            
                           />
                          
                         </div>

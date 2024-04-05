@@ -86,7 +86,7 @@ export  const holidaysApplication=async(req,res,next)=>{
 export const roomMaintaince=async(req,res,next)=>{
   try {
     const { userId, category, description,hostelName,roomNumber } = req.body;
-
+    console.log(req.body)
     const maintenanceRequest = new RoomMaintaince({
       userId,
       category,
@@ -95,7 +95,7 @@ export const roomMaintaince=async(req,res,next)=>{
       roomNumber
     });
 
-    await maintenanceRequest.save();
+    const data=await maintenanceRequest.save();
     res.status(201).json("Your request is sended successfuly");
   } catch (error) {
     res.status(500).json({ error: error.message });
