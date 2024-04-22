@@ -1,12 +1,13 @@
 import mongoose from "mongoose";
 const maintenanceRequestSchema = new mongoose.Schema({
-    userId: { type: String, required: true },
-    category: { type: String, required: true }, 
-    description: { type: String, required: true },
-    hostelName:{type:String,required:true},
-    roomNumber:{ type:Number,required:true},
-    status: { type: String, default: 'Pending' }, 
-    createdAt: { type: Date, default: Date.now },
+  name: { type: String, required: true },
+  email: { type: String, required: true },
+  roll: { type: String, required: true },
+  room: { type: String, required: true },
+  subject: { type: String, required: true },
+  complain: { type: String, required: true },
+  userId: { type: String, required: true },
+  Date: { type: Date, default: Date.now },
   });
   const RoomMaintaince = mongoose.model("RoomMaintaince",maintenanceRequestSchema);
 

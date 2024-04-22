@@ -2,7 +2,6 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import { Flowbite } from 'flowbite-react';
 import Login from './Components/Login/Login'
 import { BrowserRouter,Route,Routes } from 'react-router-dom'
 import Signup from './Components/Login/Signup'
@@ -16,6 +15,7 @@ import Leave from './Components/Pages/Leave/Leave'
 import Profile from './Components/Login/Profile'
 import LeaveDescription from './Components/Pages/Leave/LeaveDescription'
 import { Toaster } from 'react-hot-toast'
+import QrScanner from './Components/Pages/Attendance/QrScanner'
 
 
 
@@ -39,6 +39,7 @@ function App() {
           <Route path="/" element={<Signup/>}/>
           <Route path='/profile' element={<Profile/>}/>
           <Route path="/:id" element={<LeaveDescription />} />
+          <Route path='/scanner' element={<QrScanner/>}/>
         </Routes>
         <Toaster/>
         </BrowserRouter>

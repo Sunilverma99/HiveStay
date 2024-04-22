@@ -24,7 +24,7 @@ const[data,setData]=useState({
   mobileNumber:user.mobileNumber,
   homeMobileNumber:user.homeMobileNumber,
   reason:"",
-  userId:user._id
+  userId:user?._id
 });
 
 const navigate = useNavigate();
@@ -39,7 +39,6 @@ const handleSubmit = async (e) => {
       },
       body: JSON.stringify(data),
     });
-console.log(response);
     if (response.ok) {
       console.log('Data submitted successfully!');
       toast.success("Your application has been submitted successfully");

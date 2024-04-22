@@ -4,6 +4,7 @@ import Suggestion from "../models/Suggestion.js";
 import Complaint from "../models/Complaints.js";
 import HolidaysApplication from "../models/HolidaysApplication.js";
 import RoomMaintaince from '../models/RoomMaintaince.js'
+import Attendance from '../models/Attendance.js'
 
 //To find the user and its all details
 export const user= async(req,res,next)=>{
@@ -50,6 +51,7 @@ export const complaints=async(req,res,next)=>{
       return res.status(400).json({ error: 'Please Enter the complaints or Empty' });
     }
     await complaint.save();
+    
     res.status(201).send("your complaints added successfully");
   } catch (error) {
     res.status(400).send(error);
@@ -73,6 +75,7 @@ export  const holidaysApplication=async(req,res,next)=>{
   try {
     const holidayApplication = new HolidaysApplication(req.body);
     
+    
     const value=await holidayApplication.save();
     console.log("value",value);
     res.status(201).send("Your application is sended successfully");
@@ -86,7 +89,7 @@ export  const holidaysApplication=async(req,res,next)=>{
 export const roomMaintaince=async(req,res,next)=>{
   try {
     const { userId, category, description,hostelName,roomNumber } = req.body;
-    console.log(req.body)
+
     const maintenanceRequest = new RoomMaintaince({
       userId,
       category,
@@ -95,10 +98,10 @@ export const roomMaintaince=async(req,res,next)=>{
       roomNumber
     });
 
-    const data=await maintenanceRequest.save();
+    await maintenanceRequest.save();
     res.status(201).json("Your request is sended successfuly");
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(400).send(error);
   }
 }
 
@@ -117,3 +120,33 @@ export const holidayApplicationResponse = async (req, res, next) => {
     return res.status(500).json({ error: 'Internal server error' });
   }
 };
+export const getCount=async(req,res,next)=>{
+  try {
+    const userCount = await User.countDocuments();
+    const complaintCount = await Complaint.countDocuments();
+
+    res.status(200).json({ userCount, complaintCount });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const attendance=async(req,res,next)=>{
+  try{
+    const {name,roll,date}=req.body;
+    const attendance = new Attendance({name,roll,date});
+
+    const checkUser=await Attendance.findOne({roll:roll,date:date});
+    if(!checkUser){
+      await attendance.save();
+    }
+    else{
+    
+    }
+   
+    res.status(201).send("your complaints added successfully");
+  }
+  catch(error){
+    res.status(500).json({error:error.message});
+  }
+}

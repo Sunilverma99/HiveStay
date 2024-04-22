@@ -10,10 +10,13 @@ import axios from "axios";
 
 import { useSelector } from "react-redux";
 import Post from "../Post/Post";
+import { set } from "mongoose";
 
 export default function Home() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [userValue, setUserValue] = useState([]);
+  const [complainValue,setComplainValue]=useState([]);
   const user = useSelector((state) => state.auth.user);
   console.log("from home", user?.email);
 
@@ -38,39 +41,54 @@ export default function Home() {
         },
       }
     );
-    console.log(res.data);
     
     window.location.reload();
     
 
   };
 
+  useEffect(() => {
+    try{
+      axios.get("http://localhost:3000/api/getCount", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((res) => {
+        console.log(res.data);
+        setUserValue(res.data.userCount)
+        setComplainValue(res.data.complaintCount)
+      });
+    }catch(err){
+      console.log(err);
+    }
+  }, [userValue,complainValue]);
+
   const card = [
     {
       icon: "message",
       message: "Total Message",
-      number: "$53k",
+      number: "2",
       percentage: "+55% than last week",
       colorClass: "bg-blue-600",
     },
     {
       icon: "person",
       message: "Total Users",
-      number: "2,300",
+      number: `${userValue}`,
       percentage: "+3% than last month",
       colorClass: "bg-pink-600",
     },
     {
       icon: "person",
       message: "Total Complains",
-      number: "3,462",
+      number: `${complainValue}`,
       percentage: "-2% than yesterday",
       colorClass: "bg-green-600",
     },
     {
       icon: "message",
       message: "Attendance",
-      number: "$103,430",
+      number: "0",
       percentage: "+5% than yesterday",
       colorClass: "bg-yellow-400",
     },
