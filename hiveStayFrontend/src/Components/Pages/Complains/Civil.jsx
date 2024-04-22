@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { useState } from "react";
 import { useEffect } from 'react';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -17,6 +19,7 @@ export default function Civil() {
   const [subject, setSubject] = useState("");
   const [complain, setComplain] = useState("");
   const [value,setValue]=useState([]);
+  const navigate = useNavigate();
 
   const backgroundImageStyle = {
     backgroundImage:
@@ -43,7 +46,10 @@ export default function Civil() {
     })
     if(res.status===201){
       console.log("complaints added successfully")
-      window.location.reload();
+      // window.location.reload();
+      toast.success('Complaints added successfully');
+      navigate('/');
+      
     }
 
   }catch(err){

@@ -24,7 +24,7 @@ const[data,setData]=useState({
   mobileNumber:user.mobileNumber,
   homeMobileNumber:user.homeMobileNumber,
   reason:"",
-  userId:user._id
+  userId:user?._id
 });
 
 const navigate = useNavigate();

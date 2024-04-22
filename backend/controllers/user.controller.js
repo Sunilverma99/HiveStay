@@ -4,6 +4,7 @@ import Suggestion from "../models/Suggestion.js";
 import Complaint from "../models/Complaints.js";
 import HolidaysApplication from "../models/HolidaysApplication.js";
 import RoomMaintaince from '../models/RoomMaintaince.js'
+import Attendance from '../models/Attendance.js'
 
 //To find the user and its all details
 export const user= async(req,res,next)=>{
@@ -124,3 +125,23 @@ export const getCount=async(req,res,next)=>{
     res.status(500).json({ error: error.message });
   }
 };
+
+export const attendance=async(req,res,next)=>{
+  try{
+    const {name,roll,date}=req.body;
+    const attendance = new Attendance({name,roll,date});
+
+    const checkUser=await Attendance.findOne({roll:roll,date:date});
+    if(!checkUser){
+      await attendance.save();
+    }
+    else{
+    
+    }
+   
+    res.status(201).send("your complaints added successfully");
+  }
+  catch(error){
+    res.status(500).json({error:error.message});
+  }
+}

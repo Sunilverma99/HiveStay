@@ -17,6 +17,8 @@ import holidayApplicationResponse from "./routes/user.router.js"
 import getmessComplaints from "./routes/warden.router.js"
 import getCount from "./routes/user.router.js"
 import  getCivilComplaints  from "./routes/warden.router.js";
+import  getattendance  from "./routes/warden.router.js";
+import attendance from "./routes/user.router.js";
  
  dotenv.config();
 
@@ -30,8 +32,15 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  next();
+
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
 });
+
 
 app.use("/api",signup);
 app.use("/api",login)
@@ -49,6 +58,8 @@ app.use("/api",holidayApplicationResponse)
 app.use("/api",getmessComplaints)
 app.use("/api",getCount)
 app.use("/api",getCivilComplaints)
+app.use("/api",attendance)
+app.use("/api",getattendance)
 
 
 app.use(express.json()); // Parse JSON requests

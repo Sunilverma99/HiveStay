@@ -67,7 +67,7 @@ export default function Home() {
     {
       icon: "message",
       message: "Total Message",
-      number: "$53k",
+      number: "2",
       percentage: "+55% than last week",
       colorClass: "bg-blue-600",
     },
@@ -88,7 +88,7 @@ export default function Home() {
     {
       icon: "message",
       message: "Attendance",
-      number: "$103,430",
+      number: "0",
       percentage: "+5% than yesterday",
       colorClass: "bg-yellow-400",
     },

@@ -5,6 +5,8 @@ import axios from "axios";
 import { useState } from "react";
 import { useEffect } from 'react';
 import moment from 'moment';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Mess() {
@@ -15,6 +17,7 @@ export default function Mess() {
   const [subject, setSubject] = useState("");
   const [complain, setComplain] = useState("");
   const [value,setValue]=useState([]);
+  const navigate = useNavigate();
 
   const backgroundImageStyle = {
     backgroundImage:
@@ -41,7 +44,9 @@ export default function Mess() {
     })
     if(res.status===201){
       console.log("complaints added successfully")
-      window.location.reload();
+      // window.location.reload();
+      toast.success('Complaints added successfully');
+      navigate('/');
     }
 
   }catch(err){
