@@ -42,14 +42,15 @@ export default function Mess() {
       },
 
     })
-    if(res.status===201){
+    if(res.ok){
       console.log("complaints added successfully")
       // window.location.reload();
       toast.success('Complaints added successfully');
       navigate('/');
     }
-
+   
   }catch(err){
+    toast.error("Please try again");
     console.log(err);
   }
 }
@@ -154,7 +155,6 @@ useEffect(() => {
                             required
                             value={user.firstName}
                             disabled
-                            
                           />
                          
                         </div>

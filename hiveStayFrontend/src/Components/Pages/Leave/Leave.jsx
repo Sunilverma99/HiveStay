@@ -259,6 +259,16 @@ console.log(data)
                         </div>
                         </div>
                         <div className="input-group input-group-outline my-3">
+                          
+                          <input
+                            type="text"
+                            placeholder="Subject( max 12 character)"
+                            className="form-control "
+                            required
+                            id='subject'
+                          />
+                        </div>
+                        <div className="input-group input-group-outline my-3">
                           <textarea
                             type="text"
                             placeholder="Write the Reason for Leave"

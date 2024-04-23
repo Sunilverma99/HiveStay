@@ -9,7 +9,7 @@ import Home from './Components/Home/Home'
 import Layout from './Components/Layout/Layout'
 import Mess from './Components/Pages/Complains/Mess'
 import Attendance from './Components/Pages/Attendance/Attendance'
-import Civil from './Components/Pages/Complains/Civil'
+import RoomComplain from './Components/Pages/Complains/RoomMaintaince'
 import Notification from './Components/Pages/Notification/Notification'
 import Leave from './Components/Pages/Leave/Leave'
 import Profile from './Components/Login/Profile'
@@ -31,7 +31,7 @@ function App() {
           <Route path='/leave' element={<Leave/>}/>
           <Route path='/notification' element={<Notification/>}/>
           <Route path='/attendance' element={<Attendance/>}/>
-          <Route path='/civil' element={<Civil/>}/>
+          <Route path='/roomComplain' element={<RoomComplain/>}/>
           <Route path="/layout" element={<Layout/>}/>
           <Route path="/" element={<Home/>}/>
           <Route path="/login" element={<Login/>}/>
@@ -43,7 +43,7 @@ function App() {
         </Routes>
         <Toaster/>
         </BrowserRouter>
-
+    
     </>
   )
 }

@@ -88,13 +88,18 @@ export  const holidaysApplication=async(req,res,next)=>{
 //function for room maintaince like electric and civil
 export const roomMaintaince=async(req,res,next)=>{
   try {
-    const { name,email,roll,room,subject,complain,userId} = req.body;
-    const roomMaintaince = new RoomMaintaince({name,email,roll,room,subject,complain,userId});
-    if(!roomMaintaince){
-      return res.status(400).json({ error: 'Please Enter the complaints or Empty' });
-    }
-    await roomMaintaince.save();
-    res.status(201).send("your complaints added successfully");
+    const { userId, category, description,hostelName,roomNumber } = req.body;
+
+    const maintenanceRequest = new RoomMaintaince({
+      userId,
+      category,
+      description,
+      hostelName,
+      roomNumber
+    });
+
+    await maintenanceRequest.save();
+    res.status(201).json("Your request is sended successfuly");
   } catch (error) {
     res.status(400).send(error);
   }

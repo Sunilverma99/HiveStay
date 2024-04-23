@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import axios from 'axios'
 import { useState } from 'react'
-
+import SliderPost from './InfiniteCardMoving';
 
 export default function Post() {
     const [post,setPost]=useState([]);
@@ -27,8 +27,9 @@ export default function Post() {
     };
    
   return (
-    <div className=' bg-white -pl-20'>
-{post.map((p,index) => (
+    <div className=' bg-white -pl-20 '>
+          <SliderPost/>
+{/* {post.map((p,index) => (
   <div class="flex mb-6 relative items-center justify-center w-full">
   <div class="rounded-xl overflow-hidden relative text-center p-4 group items-center flex flex-col max-w-sm hover:shadow-2xl transition-all duration-500 shadow-xl">
     <div class="text-gray-500 group-hover:scale-105 transition-all w-96"> 
@@ -57,7 +58,7 @@ export default function Post() {
 </div>
 
 
-))}      
+))}       */}
     </div>
    
   
