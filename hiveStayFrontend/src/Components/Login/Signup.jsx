@@ -22,6 +22,10 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try{
+      if(email==="warden@iiitu.ac.in"){ 
+        toast.error("This  email is not allowed to sign up !");
+        return;
+      }
       const res=await axios.post("http://localhost:3000/api/signup",{firstName,lastName,email,password,rollNumber,roomNumber,branch,mess,mobileNumber,homeMobileNumber,address},{
         headers: {
           "Content-Type": "application/json",

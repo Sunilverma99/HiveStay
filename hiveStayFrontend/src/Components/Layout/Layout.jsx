@@ -7,6 +7,11 @@ import Cookies from 'js-cookie';
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useRef } from "react";
+import { MdDashboard } from "react-icons/md";
+import { MdHolidayVillage } from "react-icons/md";
+import { MdOutlineReportProblem } from "react-icons/md";
+import { FaRegCalendar } from "react-icons/fa6";
+import { IoNotifications } from "react-icons/io5";
 export default function Layout({ title }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null); 
@@ -58,33 +63,13 @@ useEffect(() => {
           <ul className={`flex flex-col ${isDropdownOpen?"":""}`}>
             <li className="mb-4 text-lg ">
               <Link to="/" className="text-slate-100 flex items-center hover:text-pink-600 ">
-                <svg
-                  className="h-12 w-10 fill-current mr-2"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M4 5a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zm0 4a1 1 0 011-1h6a1 1 0 110 2H5a1 1 0 01-1-1zm0 4a1 1 0 011-1h8a1 1 0 110 2H5a1 1 0 01-1-1zm13.707-7.707a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-3-3a1 1 0 111.414-1.414L10 10.586l7.293-7.293a1 1 0 011.414 0z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+              <MdDashboard className="m-2" />
                 Dashboard
               </Link>
             </li>
             <li className="mb-4 text-lg ">
               <Link to="/leave" className="text-slate-100 flex items-center hover:text-pink-600">
-                <svg
-                  className="h-12 w-10 fill-current mr-2"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M4 5a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zm0 4a1 1 0 011-1h6a1 1 0 110 2H5a1 1 0 01-1-1zm0 4a1 1 0 011-1h8a1 1 0 110 2H5a1 1 0 01-1-1zm13.707-7.707a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-3-3a1 1 0 111.414-1.414L10 10.586l7.293-7.293a1 1 0 011.414 0z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+              <MdHolidayVillage className="m-2" />
                 Leave-Portal
               </Link>
             </li>
@@ -95,17 +80,7 @@ useEffect(() => {
                 className="text-slate-100 flex items-center hover:text-pink-600"
                 onClick={toggleDropdown}
               >
-                <svg
-                  className="h-10 w-10 fill-current mr-2"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M3 4a1 1 0 011-1h12a1 1 0 011 1v1a1 1 0 01-1 1H4a1 1 0 01-1-1V4zm14 5a1 1 0 01-1 1H4a1 1 0 01-1-1V6a1 1 0 011-1h12a1 1 0 011 1v3zm-1 6a1 1 0 01-1 1H5a1 1 0 01-1-1v-1a1 1 0 011-1h10a1 1 0 011 1v1z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+                <MdOutlineReportProblem className="m-2" />
                 Complaints
               </a>
               {isDropdownOpen && (
@@ -124,33 +99,13 @@ useEffect(() => {
             </li>
             <li className="mb-4 text-lg ">
               <Link to="/attendance" className="text-slate-100 flex items-center hover:text-pink-600 ">
-                <svg
-                  className="h-12 w-10 fill-current mr-2"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M4 5a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zm0 4a1 1 0 011-1h6a1 1 0 110 2H5a1 1 0 01-1-1zm0 4a1 1 0 011-1h8a1 1 0 110 2H5a1 1 0 01-1-1zm13.707-7.707a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-3-3a1 1 0 111.414-1.414L10 10.586l7.293-7.293a1 1 0 011.414 0z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+              <FaRegCalendar className="m-2" />
                 Attendance Manager
               </Link>
             </li>
             <li className="mb-4 text-lg">
               <Link to="/notification" className="text-slate-100 flex items-center hover:text-pink-600">
-                <svg
-                  className="h-10 w-10 fill-current mr-2"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 4a1 1 0 011 1v6a1 1 0 01-2 0V5a1 1 0 011-1zm9-1a1 1 0 011 1v14a1 1 0 01-2 0V4a1 1 0 011-1zM1 5a1 1 0 011-1h2a1 1 0 010 2H2v12h4v-2a1 1 0 112 0v2h4v-2a1 1 0 112 0v2h2a1 1 0 010 2H3a1 1 0 01-1-1V5z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+              <IoNotifications className="m-2" />
                 Notifications
               </Link>
        <li><button onClick={logout} className="align-center mt-8 ml-4 border hover:bg-pink-500 bg-pink-600 p-2 w-44 rounded-xl text-white">Logout </button></li> 

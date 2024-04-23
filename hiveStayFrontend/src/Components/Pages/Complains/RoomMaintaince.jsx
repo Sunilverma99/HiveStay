@@ -3,13 +3,15 @@ import React, { useEffect, useState } from 'react';
 import Layout from '../../Layout/Layout';
 import { Dropdown, Toast } from "flowbite-react";
 import { useSelector } from 'react-redux';
-import {toast} from "react-hot-toast"
+import {toast} from "react-hot-toast";
+import axios from 'axios';
 export default function Civil() {
   const user = useSelector((state) => state?.auth?.user);
+console.log(user);
   const [hostelName, setHostelName] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("Category");
-
+ const [value, setValue] = useState([]);
   const backgroundImageStyle = {
     backgroundImage:
       "url('https://images.unsplash.com/photo-1497294815431-9365093b7331?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80')",
@@ -46,17 +48,72 @@ export default function Civil() {
       console.log(error);
     }
   };
-  
+  const getComplaints = async () => {
+    try {
+      const res = await axios.get("http://localhost:3000/api/getRoomComplains", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const reversedData = res.data.reverse();
+      console.log(reversedData);
+      setValue(reversedData);
+    } catch (error) {
+      console.error("Failed to fetch complaints:", error);
+    }
+  };
+  useEffect(() => {
+    getComplaints();
+  },[])
 
   return (
     <div>
       <Layout title="Room Complains"/>
-      {user?.email === "warden@iiitu.ac.in" ? (
-        <div className='ml-72'>
-          <div>
-            <h1>Mess Regarding Complaints</h1>
-          </div>
-        </div>
+      {user.email==="warden@iiitu.ac.in" ? (
+         <div className='ml-72'>
+            
+         <section class="  p-3 sm:p-5">
+ <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
+     <div class=" relative shadow-md sm:rounded-lg overflow-hidden">
+         
+         <div class="overflow-x-auto">
+             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                 <thead class="text-xs  uppercase  bg-pink-500 text-white">
+                     <tr>
+                         <th scope="col" class="px-4 py-3">Date</th>
+                         <th scope="col" class="px-4 py-3">Name</th>
+                         <th scope="col" class="px-4 py-3">Roll No.</th>
+                         <th scope="col" class="px-4 py-3">Room No.</th>
+                         <th scope="col" class="px-4 py-3">Subject</th>
+                         <th scope="col" class="px-4 py-3">Description</th>
+                     </tr>
+                 </thead>
+       {value.map((item)=>{
+           const formattedDate = new Date(item.Date).toLocaleDateString();
+
+         return( 
+                 <tbody>
+                     <tr class="border-b dark:border-pink-500">
+                         <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap ">{formattedDate}</th>
+                         <td class="px-4 text-black py-3">{item.name}</td>
+                         <td class="px-4 text-black py-3">{item.roll}</td>
+                         <td class="px-4 text-black py-3">{item.room}</td>
+                         <td class="px-4 text-black py-3">{item.subject}</td>
+                         <td class="px-4 text-black py-3">{item.complain}</td> 
+                     </tr>
+                 </tbody>
+             )
+             
+         
+           })}
+             </table>
+         </div>
+         
+     </div>
+ </div>
+ </section>
+        
+         </div>
       ) : (
         <body className="white">
           <main className="main-content mt-0">

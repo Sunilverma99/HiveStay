@@ -56,9 +56,9 @@ export const getmessComplaints = async (req, res, next) => {
     }
 }
 
-export const getCivilComplaints = async (req, res, next) => {
+export const getRoomComplains = async (req, res, next) => {
     try{
-        const application = await RoomMaintaince.find();
+        const application = await  RoomMaintaince.find();
         console.log(application);
         return res.status(200).json(application);
     }
@@ -67,7 +67,6 @@ export const getCivilComplaints = async (req, res, next) => {
         return res.status(500).json({ error: 'Internal Server Error' });
     }
 }
-
 
 export const getattendance = async (req, res, next) => {
     try{

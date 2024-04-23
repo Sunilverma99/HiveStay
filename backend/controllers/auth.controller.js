@@ -37,87 +37,93 @@ import User from '../models/User.js';
   export const login = async (req, res, next) => {
   const { email, password } = req.body;
   console.log(email,password);
-  try {
-    if (!email || !email.endsWith('@iiitu.ac.in')) {
-      return res.status(400).json({ error: 'Invalid email format. Only @iiitu.ac.in emails are allowed.' });
+  if(email!=="warden@iiitu.ac.in"){
+    try {
+      if (!email || !email.endsWith('@iiitu.ac.in')) {
+        return res.status(400).json({ error: 'Invalid email format. Only @iiitu.ac.in emails are allowed.' });
+      }
+  
+      const validUser = await User.findOne({ email: email });
+  
+      if (!validUser) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+  
+      const validPassword = bcrypt.compareSync(password, validUser.password);
+  
+      if (!validPassword) {
+        return res.status(404).json({ error: 'Password is incorrect' });
+      }
+  
+      const { password: pass, ...rest } = validUser._doc;
+      const tokenData={
+        id: validUser._id,
+        firstName: validUser.firstName,
+        lastName: validUser.lastName,
+        email: validUser.email,
+        rollNumber: validUser.rollNumber,
+        roomNumber: validUser.roomNumber,
+        branch: validUser.branch,
+        mess: validUser.mess,
+        mobileNumber: validUser.mobileNumber,
+        homeMobileNumber: validUser.homeMobileNumber,
+        address: validUser.address
+      }
+      const token = jwt.sign(tokenData, process.env.JWT_TOKEN);
+  
+      const options = {
+        httpOnly: true,
+        expires: new Date(Date.now() + 5 * 60 * 60 * 24 * 1000),
+        secure: true,
+        sameSite: 'none'
+      };
+  
+      res.status(200).cookie('access_token', token, options).json({rest,token});
+    } catch (error) {
+      return next(error);
     }
-
-    const validUser = await User.findOne({ email: email });
-
-    if (!validUser) {
-      return res.status(404).json({ error: 'User not found' });
+  }else{
+    try {
+      if (!email || !email.endsWith('@iiitu.ac.in')) {
+        return res.status(400).json({ error: 'Invalid email format. Only @iiitu.ac.in emails are allowed.' });
+      }
+  
+      const validUser = await User.findOne({ email: email });
+  
+      if (!validUser) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+  
+      const validPassword = bcrypt.compareSync(password, validUser.password);
+  
+      if (!validPassword) {
+        return res.status(404).json({ error: 'Password is incorrect' });
+      }
+  
+      const { password: pass, ...rest } = validUser._doc;
+      const tokenData={
+        id: validUser._id,
+        firstName: validUser.firstName,
+        lastName: validUser.lastName,
+        email: validUser.email,
+        mobileNumber: validUser.mobileNumber,
+      }
+      const token = jwt.sign(tokenData, process.env.JWT_TOKEN);
+  
+      const options = {
+        httpOnly: true,
+        expires: new Date(Date.now() + 5 * 60 * 60 * 24 * 1000),
+        secure: true,
+        sameSite: 'none'
+      };
+  
+      res.status(200).cookie('access_token', token, options).json({rest,token});
+    } catch (error) {
+      return next(error);
     }
-
-    const validPassword = bcrypt.compareSync(password, validUser.password);
-
-    if (!validPassword) {
-      return res.status(404).json({ error: 'Password is incorrect' });
-    }
-
-    const { password: pass, ...rest } = validUser._doc;
-    const tokenData={
-      id: validUser._id,
-      firstName: validUser.firstName,
-      lastName: validUser.lastName,
-      email: validUser.email,
-      rollNumber: validUser.rollNumber,
-      roomNumber: validUser.roomNumber,
-      branch: validUser.branch,
-      mess: validUser.mess,
-      mobileNumber: validUser.mobileNumber,
-      homeMobileNumber: validUser.homeMobileNumber,
-      address: validUser.address
-    }
-    const token = jwt.sign(tokenData, process.env.JWT_TOKEN);
-
-    const options = {
-      httpOnly: true,
-      expires: new Date(Date.now() + 5 * 60 * 60 * 24 * 1000),
-      secure: true,
-      sameSite: 'none'
-    };
-
-    res.status(200).cookie('access_token', token, options).json({rest,token});
-  } catch (error) {
-    return next(error);
   }
 };
-// function for google login if alreday singup it will login but if not signup it singup and gernerate a random passwrod 
-// export const googleLogin = async (req, res, next) => {
-//   try {
-//     const userEmail = req.body.email.toLowerCase();
-    
-//     // Check if the user's email ends with 'iiitu.ac.in'
-//     if (!userEmail.endsWith('@iiitu.ac.in')) {
-//       return res.status(403).json({ error: 'Only iiitu.ac.in email addresses are allowed.' });
-//     }
 
-//     const user = await User.findOne({ email: userEmail });
-
-//     if (user) {
-//       const { password: pass, ...rest } = user._doc;
-//       const token = jwt.sign({ id: user._id }, process.env.JWT_TOKEN);
-//       res.cookie('access_token', token, { secure: true, httpsOnly: true }).status(200).json(rest);
-//     } else {
-//       const generatedPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
-//       const hashPassword = await bcrypt.hashSync(generatedPassword, 10);
-//       const newUser = new User({
-//         username: req.body.username.split(" ").join("").toLowerCase() + Math.random().toString(36).slice(-4),
-//         email: userEmail,
-//         password: hashPassword,
-//         profilePhoto: req.body.photo,
-//       });
-
-//       await newUser.save();
-
-//       const { password: pass, ...rest } = newUser._doc;
-//       const token = jwt.sign({ id: newUser._id }, process.env.JWT_TOKEN);
-//       res.cookie('access_token', token, { httpsOnly: true }).status(200).json(rest);
-//     }
-//   } catch (error) {
-//     next(error);
-//   }
-// }
 
 //simple function to delete the cookie
 export const logout=async(req,res,next)=>{
