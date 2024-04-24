@@ -16,8 +16,8 @@ import Profile from './Components/Login/Profile'
 import LeaveDescription from './Components/Pages/Leave/LeaveDescription'
 import { Toaster } from 'react-hot-toast'
 import QrScanner from './Components/Pages/Attendance/QrScanner'
-
-
+import HoselRulePage from './Components/Pages/rules/HostelRule'
+import MessRulesPage from './Components/Pages/rules/MessRules'
 
 
 function App() {
@@ -40,6 +40,8 @@ function App() {
           <Route path='/profile' element={<Profile/>}/>
           <Route path="/:id" element={<LeaveDescription />} />
           <Route path='/scanner' element={<QrScanner/>}/>
+          <Route path='/hostelRule' element={<HoselRulePage/>}/>
+          <Route path='/messRule' element={<MessRulesPage/>}/>
         </Routes>
         <Toaster/>
         </BrowserRouter>
