@@ -12,6 +12,7 @@ export default function Notification() {
 
   const applicationResult = async () => {
     try {
+      console.log(userId)
       const res = await axios.get(`http://localhost:3000/api/applicationResult/${userId}`, {
         headers: {
           'Content-Type': 'application/json',
@@ -27,7 +28,7 @@ export default function Notification() {
 
   useEffect(() => {
     applicationResult();
-  }, [userId,value]);
+  }, []);
 
   return (
     <div>

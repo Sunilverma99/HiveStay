@@ -188,8 +188,8 @@ export default function Home() {
                   placeholder='Title'
                   class='mb-2 border-b w-full focus:outline-none'
                 ></input>
-                <div class='flex mt-4'>
-                  <img src="https://upload.wikimedia.org/wikipedia/en/8/83/Indian_Institute_of_Information_Technology%2C_Una_logo.png" class='h-10 w-10 mr-4' />
+                <div class='flex mt-4 '>
+                  <img src="https://upload.wikimedia.org/wikipedia/en/8/83/Indian_Institute_of_Information_Technology%2C_Una_logo.png" class='h-16 w-16 m-2 object-contain' />
                   <textarea
                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 resize-none"
                     placeholder="What's happening?"

@@ -86,7 +86,7 @@ const exportToExcel = () => {
 
   return (
       <div>
-        {!user?.email==="warden@iiitu.ac.in"?(
+        {user?.email!=="warden@iiitu.ac.in"?(
           <>
           <h1>QR Scanner</h1>
           <Scanner

@@ -68,7 +68,7 @@ export default function Attendance() {
       <Layout title="Attendance"/>
       
     </div>
-    <h1 className='text-center'>hello</h1>
+    <h1 className='text-center'></h1>
     <button className='text-center' >Get Location</button>
     <div className='flex flex-col gap-10 items-center justify-center '>
                     <QRCode
